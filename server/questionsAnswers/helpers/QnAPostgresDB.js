@@ -1,8 +1,3 @@
-/* eslint-disable prefer-const */
-/* eslint-disable no-plusplus */
-/* eslint-disable camelcase */
-/* eslint-disable quotes */
-/* eslint-disable spaced-comment */
 // Helper functions to query the Postgres database
 
 // Import stuff
