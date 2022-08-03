@@ -91,7 +91,13 @@ QnARouter.post('/questions/:question_id/answers', (request, response) => {
   // const answerData = [request.body.body, new Date(), request.body.name, request.body.email, parseInt(request.params.question_id, 10)];
   QnAAPI.addAnswer(answerData)
     .then((results) => results.rows[0].answer_id)
-    .then((answer_id) => QnAAPI.addPhoto(answer_id, request.body.photos))
+    .then((answer_id) => {
+      if (request.body.photos.length > 0) {
+        return QnAAPI.addPhoto(answer_id, request.body.photos);
+      } else {
+        return;
+      }
+    })
     .then(() => {
       response.status(201).send();
     })
@@ -121,6 +127,18 @@ QnARouter.put('/answers/:answer_id/report', (request, response) => {
       response.status(500).send(error);
     });
 });
+
+// POST new photo(s) to a given answer
+QnARouter.post('/answers/:answer_id/photos', (req, res) => {
+  QnAAPI.addPhoto(req.params.answer_id, req.body.photos)
+    .then(() => {
+      res.status(201).send();
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send();
+    })
+})
 
 // A POST request for testing purposes
 QnARouter.post('/test/:id/all/:page', (request, response) => {
