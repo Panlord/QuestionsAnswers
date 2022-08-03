@@ -73,7 +73,7 @@ QnARouter.get('/questions/:question_id/answers', (request, response) => {
         count: request.query.count,
         results: results.rows[0].array_agg,
       };
-      response.send(allAnswerData);
+      response.status(200).send(allAnswerData);
     })
     .catch((error) => {
       response.status(500).send(error);
